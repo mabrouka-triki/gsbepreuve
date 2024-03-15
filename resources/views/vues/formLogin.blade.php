@@ -1,8 +1,6 @@
 @extends('layouts/master')
 @section('content')
     {!! Form::open(['url' =>'login']) !!}
-
-
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="well well-md">
