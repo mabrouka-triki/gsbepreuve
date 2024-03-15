@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VisiteurController;
+use App\Http\Controllers\PraticienController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,5 +20,8 @@ Route::get('/', function () {
 });
 
 Route::get('/formLogin ',[\App\Http\Controllers\VisiteurController::class,'getLogin']);
-
+Route::get('/formLogin ',[\App\Http\Controllers\VisiteurController::class,'singOut']);
 Route::post('/login ',[\App\Http\Controllers\VisiteurController::class,'signIn']);
+//liste
+Route::get('/listePraticiens ',[\App\Http\Controllers\PraticienController::class,'getPraticien']);
+

@@ -1,21 +1,25 @@
 <?php
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Session;
 use App\dao\ServiceVisiteur;
-use MonException;
+use App\Exceptions\MonException;
+use Exception;
+
+
 class VisiteurController extends Controller
 {
-    public function signIn(Request $request)
+    public function signIn()
     {
         try {
-            $login = $request->input('login');
-            $pwd = $request->input('pwd');
+            $login = Request::input('login');
+            $pwd = Request::input('pwd');
 
             $unVisiteur = new ServiceVisiteur();
             $connected = $unVisiteur->login($login, $pwd);
 
             if ($connected) {
-                if (session()->get('type') === 'p') {
+                if (Session::get('type') === 'p') {
                     return view('home');
                 } else {
                     return view('home');
@@ -48,11 +52,9 @@ class VisiteurController extends Controller
 
     public function singOut()
     {
-        $unVisiteur = new ServiceVisiteur();
-        $unVisiteur->logout();
-        return view('home');
-    }
 
+        return redirect()->route('login'); // Redirection vers la page de connexion
+    }
 
 
 

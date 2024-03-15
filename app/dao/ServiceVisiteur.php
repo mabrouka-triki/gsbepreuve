@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
 use App\Exceptions\MonException;
+use Illuminate\Support\Facades\Hash;
 
 /*
  * Authentifie Le visiteur sur son Login et Mdp
@@ -26,26 +27,17 @@ class ServiceVisiteur
                 ->select()
                 ->where('login_visiteur', '=', $login)
                 ->first();
-            echo "HELLO WORLD $login";
-            if ($visiteur) {
-                echo $visiteur->pwd_visiteur." ".$pwd;
-                if ($visiteur->pwd_visiteur == $pwd) {
+
+            if($visiteur && Hash::check($pwd, $visiteur->pwd_visiteur)) {
                     Session::put('id', $visiteur->id_visiteur);
                     Session::put('type', $visiteur->type_visiteur);
                     $connected = true;
                 }
-            }
-        } catch (QueryException $e) { // Correction : Utilisation de QueryException au lieu de BadQueryStringException
+        } catch (QueryException $e) {
             echo $e->getMessage();
             throw new MonException($e->getMessage(), 5);
         }
         return $connected;
     }
-
-    public function logout()
-    {
-        Session::put('id', 0);
-    }
-
 
 }
