@@ -14,8 +14,7 @@ class PraticienController
             $erreur = Session::get('monErreur');
             Session::forget('monErreur');
             $unServicePraticiens= new ServicePraticien();
-            $id_praticien = Session::get('id_praticien');
-            $mesPraticiens = $unServicePraticiens->getPraticien($id_praticien);
+            $mesPraticiens = $unServicePraticiens->getPraticiens();
             $erreur = '';
             return view('Vues/listePraticiens', compact('mesPraticiens', 'erreur'));
         } catch (MonException $e) {
@@ -27,4 +26,6 @@ class PraticienController
         }
     }
 }
+
+
 

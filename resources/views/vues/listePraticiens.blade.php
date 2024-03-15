@@ -11,8 +11,9 @@
                 <th style="width: 25%; text-align:center">ID praticien</th>
                 <th style="width: 25%; text-align:center">Nom praticien </th>
                 <th style="width: 25%; text-align:center">Prénom de praticien </th>
-                <th style="width: 25%; text-align:center">Specialite</th>
                 <th style="width: 25%; text-align:center">cp praticien </th>
+                <th style="width: 25%; text-align:center">Specialite</th>
+
             </tr>
             </thead>
             @foreach ($mesPraticiens as $unPraticiens)
@@ -20,8 +21,8 @@
                     <td>{{$unPraticiens->id_praticien}}</td>
                     <td>{{$unPraticiens->nom_praticien}}</td>
                     <td>{{$unPraticiens->prenom_praticien}}</td>
-                    <td>{{$unPraticiens->id_specialite}}</td>
                     <td>{{$unPraticiens->cp_praticien}}</td>
+
                 </tr>
 
             @endforeach
