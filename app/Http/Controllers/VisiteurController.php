@@ -52,8 +52,9 @@ class VisiteurController extends Controller
 
     public function singOut()
     {
-
-        return redirect()->route('login'); // Redirection vers la page de connexion
+        $unVisiteur = new ServiceVisiteur();
+        $unVisiteur->logout();
+        return view('home');
     }
 
 

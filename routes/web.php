@@ -20,8 +20,13 @@ Route::get('/', function () {
 });
 
 Route::get('/formLogin ',[\App\Http\Controllers\VisiteurController::class,'getLogin']);
-Route::get('/formLogin ',[\App\Http\Controllers\VisiteurController::class,'singOut']);
+
 Route::post('/login ',[\App\Http\Controllers\VisiteurController::class,'signIn']);
+
+Route::get('/getLogout ',[\App\Http\Controllers\VisiteurController::class,'singOut']);
 //liste
 Route::get('/listePraticiens ',[\App\Http\Controllers\PraticienController::class,'getPraticien']);
+
+
+
 

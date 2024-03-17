@@ -18,6 +18,20 @@ class ServicePraticien{
             throw new MonException("Erreur lors de la récupération des praticiens : " . $e->getMessage(), 5);
         }
     }
+
+    //public function getPraticiens()
+    //{
+    //    try {
+    //        $mesPraticiens = DB::table('praticien')
+    //            ->join('posseder', 'praticien.id_praticien', '=', 'posseder.id_praticien')
+    //            ->join('specialite', 'posseder.id_specialite', '=', 'specialite.id_specialite')
+    //            ->select('praticien.id_praticien', 'praticien.nom_praticien', 'praticien.prenom_praticien', 'praticien.cp_praticien', 'specialite.lib_specialite')
+    //            ->get();
+    //        return $mesPraticiens;
+    //    } catch (QueryException $e) {
+    //        throw new MonException("Erreur lors de la récupération des praticiens : " . $e->getMessage(), 5);
+    //    }
+    //}
     public function getById($id_praticien)
     {
         try {

@@ -13,7 +13,7 @@ class PraticienController
         try {
             $erreur = Session::get('monErreur');
             Session::forget('monErreur');
-            $unServicePraticiens= new ServicePraticien();
+            $unServicePraticiens = new ServicePraticien();
             $mesPraticiens = $unServicePraticiens->getPraticiens();
             $erreur = '';
             return view('Vues/listePraticiens', compact('mesPraticiens', 'erreur'));
