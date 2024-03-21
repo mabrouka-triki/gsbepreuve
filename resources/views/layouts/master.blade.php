@@ -7,8 +7,7 @@
     {!! Html::style('assets/css/bootstrap.css') !!}
     {!! Html::style('assets/css/monStyle.css') !!}
     <!-- Fonts -->
-    <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet'
-          type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
 </head>
 <body class="body">
 <div class="container">
@@ -33,7 +32,7 @@
                 <div class="collapse navbar-collapse" id="navbar-collapse-target">
                     <ul class="nav navbar-nav">
                         <li><a href="{{ url('/listePraticiens') }}" data-toggle="collapse" data-target=".navbar-collapse.in">Lister</a></li>
-                        <li><a href="{{ url('/ajout') }}" data-toggle="collapse" data-target=".navbar-collapse.in">Ajouter </a></li>
+                        <li><a href="{{ url('/addSpePraticien') }}" data-toggle="collapse" data-target=".navbar-collapse.in">Ajouter </a></li>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">

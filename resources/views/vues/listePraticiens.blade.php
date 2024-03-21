@@ -13,6 +13,7 @@
                 <th style="width: 25%; text-align:center">Prénom de praticien </th>
                 <th style="width: 25%; text-align:center">cp praticien </th>
                 <th style="width: 25%; text-align:center">Specialite</th>
+                <th style="width: 25%; text-align:center">Action </th>
 
 
             </tr>
@@ -25,8 +26,16 @@
                     <td>{{$unPraticiens->cp_praticien}}</td>
                     <td>{{$unPraticiens->lib_specialite}}</td>
 
-                </tr>
+                <td style="text-align: center">
+                    <a href="{{ url('/') }}/{{ $unPraticiens->id_praticien }}">
+                        <span class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="top" title="modifier"></span>
 
+                <td style="text-align: center">
+                    <a class="glyphicon glyphicon-remove" data-toggle="tooltip" data-placement="top" title="supprimer"
+                       onclick="if (confirm('Suppression confirmée ?')) {
+                window.location='{{ url('/supprimerSpePraticien') }}/{{ $unPraticiens->id_praticien }}';}">
+                    </a>
+                </td>
             @endforeach
         </table>
         <div class="col-md-6 col-md-offset-3">

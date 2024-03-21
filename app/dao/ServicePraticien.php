@@ -35,4 +35,13 @@ class ServicePraticien{
             throw new MonException("Erreur lors de la récupération du praticien : " . $e->getMessage(), 5);
         }
     }
+    public function ajouterSpecialiteAuPraticien($praticienId, $specialiteId)
+    {
+        $posseder = DB::table('posseder');
+        $posseder->id_praticien = $praticienId;
+        $posseder->id_specialite = $specialiteId;
+        $posseder->save();
+        return $posseder;
+    }
+
 }
