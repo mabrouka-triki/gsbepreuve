@@ -1,8 +1,6 @@
 @extends('layouts/master')
 @section('content')
 
-    <br>
-    <br>
     {!! Form::open(['url' => 'postajoutFrais']) !!}
     <div class="col-md-12  col-sm-12 well well-md">
         <center><h1>Ajouter une fiche de Frais </h1></center>
@@ -25,7 +23,6 @@
                     <a href=" "><button type="submit" class="btn btn-default btn-primary">
                         <span class="glyphicon glyphicon-ok"></span> Valider
                     </button>
-                    &nbsp;
 
                     <button type="button" class="btn btn-default btn-primary"
                             onclick="javascript: window.location = '';">

@@ -5,10 +5,8 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\MonException;
 
-class ServicePraticien{
-
-
-
+class ServicePraticien
+{
     public function getPraticiens()
     {
         try {
@@ -22,26 +20,42 @@ class ServicePraticien{
             throw new MonException("Erreur lors de la récupération des praticiens : " . $e->getMessage(), 5);
         }
     }
-
-    public function getById($id_praticien)
+    public function insertSpecialite($praticienId, $specialiteId, $diplome, $coefPrescription)
     {
         try {
-            $praticien = DB::table('praticien')
-                ->select()
-                ->where('id_praticien', '=', $id_praticien)
-                ->first();
-            return $praticien;
+            DB::table('posseder')->insert([
+                'id_praticien' => $praticienId,
+                'id_specialite' => $specialiteId,
+                'diplome' => $diplome,
+                'coef_prescription' => $coefPrescription,
+            ]);
         } catch (QueryException $e) {
-            throw new MonException("Erreur lors de la récupération du praticien : " . $e->getMessage(), 5);
+            throw new MonException("Erreur lors de l'insertion de la spécialité : " . $e->getMessage());
         }
     }
-    public function ajouterSpecialiteAuPraticien($praticienId, $specialiteId)
+
+    public function getAllPraticiens()
     {
-        $posseder = DB::table('posseder');
-        $posseder->id_praticien = $praticienId;
-        $posseder->id_specialite = $specialiteId;
-        $posseder->save();
-        return $posseder;
+        try {
+            $praticiens = DB::table('praticien')
+                ->select('id_praticien', 'nom_praticien', 'prenom_praticien')
+                ->get();
+            return $praticiens;
+        } catch (\Exception $e) {
+            throw new MonException("Erreur lors de la récupération des praticiens : " . $e->getMessage(), 5);
+        }
     }
 
+    public function getAllSpecialites()
+    {
+        try {
+            $specialites = DB::table('specialite')
+                ->select('id_specialite', 'lib_specialite')
+                ->get();
+            return $specialites;
+        } catch (\Exception $e) {
+            throw new MonException("Erreur lors de la récupération des spécialités : " . $e->getMessage(), 5);
+        }
+    }
 }
+

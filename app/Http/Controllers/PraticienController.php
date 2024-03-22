@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\dao\ServiceFrais;
 use Illuminate\Support\Facades\DB;
 use App\dao\ServicePraticien;
 use Illuminate\Support\Facades\Request;
@@ -26,27 +27,31 @@ class PraticienController
         }
     }
 
-    public function ajouterSpecialite(Request $request, $praticienId)
+
+
+
+
+
+    public function addSpecialite(Request $request) //
     {
-        // Valider les données du formulaire
-        $request->validate([
-            'specialite_id' => 'required|exists:specialites,id',
-        ]);
+        try {
+            $praticienId = request::input('id_praticien'); // Modifier pour récupérer les valeurs des champs correctement
+            $specialiteId = request::input('id_specialite');
+            $diplome = request::input('diplome');
+            $coefPrescription = request::input('coef_prescription');
 
-        // Trouver le praticien
-        $praticien = Praticien::findOrFail($praticienId);
+            $unServicePraticien = new ServicePraticien();
+            $unServicePraticien->insertSpecialite($praticienId, $specialiteId, $diplome, $coefPrescription);
 
-        // Créer une nouvelle instance de la relation posseder
-        $posseder = new Posseder();
-        $posseder->id_praticien = $praticienId;
-        $posseder->id_specialite = $request->specialite_id;
-        $posseder->save();
-
-        // Rediriger avec un message de succès
-        return redirect()->back()->with('success', 'Spécialité ajoutée avec succès au praticien.');
+            return redirect('/listePraticiens')->with('success', 'Spécialité ajoutée avec succès.');
+        } catch (\Exception $e) {
+            $erreur = $e->getMessage();
+            return view('vues/error', compact('erreur'));
+        }
     }
-
 }
+
+
 
 
 

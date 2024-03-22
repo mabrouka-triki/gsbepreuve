@@ -27,14 +27,10 @@ Route::get('/getLogout ',[\App\Http\Controllers\VisiteurController::class,'singO
 Route::get('/listePraticiens ',[\App\Http\Controllers\PraticienController::class,'getPraticien']);
 
 
-// Afficher le formulaire d'ajout de spécialité
-Route::get('/ajoutSpecialite', [\App\Http\Controllers\PraticienController::class, '']);
-
-// Ajouter la spécialité à un praticien
-Route::post('/ajoutSpecialite', [\App\Http\Controllers\PraticienController::class, '']);
-
-// Validation du formulaire d'ajout de spécialité
-Route::post('/postAjoutSpecialite', [\App\Http\Controllers\PraticienController::class, '']);
 
 
+
+Route::get('/addSpePraticien', [\App\Http\Controllers\PraticienController::class, 'addSpecialite']);
+
+Route::post('/ajoutspecialite', [\App\Http\Controllers\PraticienController::class, 'addSpecialite']);
 
