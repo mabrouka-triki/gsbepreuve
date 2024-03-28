@@ -5,6 +5,9 @@
         <div class="blanc">
             <h1 style="text-align: center">Liste  des Praticiens </h1>
         </div>
+<br>
+
+
         <table class="table table-bordered table-striped table-responsive">
             <thead>
             <tr>

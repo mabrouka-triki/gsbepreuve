@@ -20,11 +20,28 @@ class ServicePraticien
             throw new MonException("Erreur lors de la récupération des praticiens : " . $e->getMessage(), 5);
         }
     }
-    public function insertSpecialite($praticienId, $specialiteId, $diplome, $coefPrescription)
+    public function recherchePraticienParNom()
+    {
+        try {
+            $praticiens = DB::table('praticien')
+                ->join('posseder', 'praticien.id_praticien', '=', 'posseder.id_praticien')
+                ->join('specialite', 'posseder.id_specialite', '=', 'specialite.id_specialite')
+                ->where('praticien.nom_praticien', 'LIKE', "%nom%")
+                ->select('praticien.nom_praticien', 'praticien.prenom_praticien', 'specialite.lib_specialite')
+                ->get();
+
+            return $praticiens;
+        } catch (QueryException $e) {
+            throw new \Exception("Erreur : " . $e->getMessage(), 5);
+        }
+    }
+
+
+
+    public function insertSpecialite($specialiteId, $diplome, $coefPrescription)
     {
         try {
             DB::table('posseder')->insert([
-                'id_praticien' => $praticienId,
                 'id_specialite' => $specialiteId,
                 'diplome' => $diplome,
                 'coef_prescription' => $coefPrescription,
@@ -34,28 +51,6 @@ class ServicePraticien
         }
     }
 
-    public function getAllPraticiens()
-    {
-        try {
-            $praticiens = DB::table('praticien')
-                ->select('id_praticien', 'nom_praticien', 'prenom_praticien')
-                ->get();
-            return $praticiens;
-        } catch (\Exception $e) {
-            throw new MonException("Erreur lors de la récupération des praticiens : " . $e->getMessage(), 5);
-        }
-    }
-
-    public function getAllSpecialites()
-    {
-        try {
-            $specialites = DB::table('specialite')
-                ->select('id_specialite', 'lib_specialite')
-                ->get();
-            return $specialites;
-        } catch (\Exception $e) {
-            throw new MonException("Erreur lors de la récupération des spécialités : " . $e->getMessage(), 5);
-        }
-    }
 }
+
 

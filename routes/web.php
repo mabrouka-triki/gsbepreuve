@@ -34,3 +34,14 @@ Route::get('/addSpePraticien', [\App\Http\Controllers\PraticienController::class
 
 Route::post('/ajoutspecialite', [\App\Http\Controllers\PraticienController::class, 'addSpecialite']);
 
+
+Route::get('/rechercherPraticien', [\App\Http\Controllers\PraticienController::class, 'rechercherPraticien']);
+
+
+
+
+
+
+Route::get('/ModifierSpePraticiens/{id}', [PraticienController::class, 'updateSpecialite']);
+
+Route::post('/postmodifierSpe', [PraticienController::class, 'updateSpecialite'])->name('postmodifierSpe');

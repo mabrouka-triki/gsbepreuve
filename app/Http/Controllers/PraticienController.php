@@ -28,10 +28,6 @@ class PraticienController
     }
 
 
-
-
-
-
     public function addSpecialite(Request $request) //
     {
         try {
@@ -49,9 +45,36 @@ class PraticienController
             return view('vues/error', compact('erreur'));
         }
     }
+
+    public function updateSpecialite($id_Praticien)
+    {
+        try {
+            $serviceFrais = new ServicePraticien();
+            $servicePraticien = new ServicePraticien();
+
+            $serviceFrais = $servicePraticien->getById($id_Praticien);
+            $praticiens = $servicePraticien->getAllSpecialite();
+
+            return view('Vues/listePraticiens', compact('id_Praticien'));
+
+        } catch (MonException $e) {
+            $erreur = $e->getMessage();
+            return view('vues/error', compact('erreur'));
+        } catch (Exception $e) {
+            $erreur = $e->getMessage();
+            return view('vues/error', compact('erreur'));
+        }
+    }
+    public function rechercherPraticien()
+    {
+        $nomPraticien = request::input('nom_praticien');
+
+        $servicePraticien = new ServicePraticien();
+        $praticiens = $servicePraticien->recherchePraticienParNom($nomPraticien);
+
+        return view('vues/rechercherPraticien', compact('praticiens'));
+    }
 }
-
-
 
 
 
