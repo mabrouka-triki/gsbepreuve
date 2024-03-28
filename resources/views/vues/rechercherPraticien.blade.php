@@ -6,7 +6,6 @@
             <h1 style="text-align: center">Résultats de la recherche</h1>
         </div>
 
-        <form action="{{ route('rechercherPraticien') }}" method="GET">
             <center>
                 <input type="text" name="nom_praticien" placeholder="Nom du praticien">
                 <button type="submit">Rechercher</button>
