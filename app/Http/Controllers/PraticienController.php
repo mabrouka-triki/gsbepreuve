@@ -28,34 +28,46 @@ class PraticienController
     }
 
 
-    public function addSpecialite(Request $request) //
+    public function addSpecialite()
     {
         try {
-            $praticienId = request::input('id_praticien'); // Modifier pour récupérer les valeurs des champs correctement
+
+            $praticienId = request::input('id_praticien');
             $specialiteId = request::input('id_specialite');
             $diplome = request::input('diplome');
             $coefPrescription = request::input('coef_prescription');
 
+            if ($praticienId === null) {
+                throw new \Exception("Veuillez sélectionner un praticien.");
+            }
+
             $unServicePraticien = new ServicePraticien();
             $unServicePraticien->insertSpecialite($praticienId, $specialiteId, $diplome, $coefPrescription);
 
-            return redirect('/listePraticiens')->with('success', 'Spécialité ajoutée avec succès.');
+
+            return view('Vues/addSpePraticien')->with('success', 'Spécialité ajoutée avec succès.');
         } catch (\Exception $e) {
-            $erreur = $e->getMessage();
-            return view('vues/error', compact('erreur'));
+            // En cas d'erreur, retourner à la vue avec un message d'erreur
+            return view('Vues/error')->with('error', $e->getMessage());
         }
     }
+
+
 
     public function updateSpecialite($id_Praticien)
     {
         try {
-            $serviceFrais = new ServicePraticien();
+            // Instancier le service Praticien
             $servicePraticien = new ServicePraticien();
 
-            $serviceFrais = $servicePraticien->getById($id_Praticien);
-            $praticiens = $servicePraticien->getAllSpecialite();
+            // Obtenir les détails du praticien par son ID
+            $praticien = $servicePraticien->getById($id_Praticien);
 
-            return view('Vues/listePraticiens', compact('id_Praticien'));
+            // Obtenir toutes les spécialités pour afficher dans la liste déroulante
+            $specialites = $servicePraticien->getAllSpecialite();
+
+            // Passer les données récupérées à la vue du formulaire de modification
+            return view('Vues/modifierSpePraticien', compact('praticien', 'specialites'));
 
         } catch (MonException $e) {
             $erreur = $e->getMessage();
@@ -65,6 +77,11 @@ class PraticienController
             return view('vues/error', compact('erreur'));
         }
     }
+
+
+
+
+
     public function rechercherPraticien()
     {
         $nomPraticien = request::input('nom_praticien');

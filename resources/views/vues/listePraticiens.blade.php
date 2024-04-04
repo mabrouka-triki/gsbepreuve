@@ -30,7 +30,7 @@
                     <td>{{$unPraticiens->lib_specialite}}</td>
 
                 <td style="text-align: center">
-                    <a href="{{ url('/') }}/{{ $unPraticiens->id_praticien }}">
+                    <a href="{{ url('/ModifSpePraticien') }}/{{ $unPraticiens->id_praticien }}">
                         <span class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="top" title="modifier"></span>
 
                 <td style="text-align: center">
@@ -39,6 +39,7 @@
                 window.location='{{ url('/supprimerSpePraticien') }}/{{ $unPraticiens->id_praticien }}';}">
                     </a>
                 </td>
+
             @endforeach
         </table>
         <div class="col-md-6 col-md-offset-3">

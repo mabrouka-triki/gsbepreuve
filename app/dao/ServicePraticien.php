@@ -20,6 +20,7 @@ class ServicePraticien
             throw new MonException("Erreur lors de la récupération des praticiens : " . $e->getMessage(), 5);
         }
     }
+
     public function recherchePraticienParNom($nomPraticien)
     {
         try {
@@ -36,19 +37,23 @@ class ServicePraticien
             throw new MonException("Erreur : " . $e->getMessage());
         }
     }
-    public function insertSpecialite($specialiteId, $diplome, $coefPrescription)
+
+    public function insertSpecialite($praticienId, $specialiteId, $diplome, $coefPrescription)
     {
         try {
             DB::table('posseder')->insert([
+                'id_praticien' => $praticienId,
                 'id_specialite' => $specialiteId,
                 'diplome' => $diplome,
                 'coef_prescription' => $coefPrescription,
             ]);
-        } catch (QueryException $e) {
+        } catch (\Exception $e) {
             throw new MonException("Erreur lors de l'insertion de la spécialité : " . $e->getMessage());
         }
     }
+    public function updateSpe(){
+
+    }
 
 }
-
 
