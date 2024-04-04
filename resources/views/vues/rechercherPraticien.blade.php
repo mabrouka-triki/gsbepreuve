@@ -6,6 +6,7 @@
             <h1 style="text-align: center">Résultats de la recherche</h1>
         </div>
 
+        <form method="GET" action="{{ route('rechercherPraticien') }}">
             <center>
                 <input type="text" name="nom_praticien" placeholder="Nom du praticien">
                 <button type="submit">Rechercher</button>
@@ -24,6 +25,7 @@
             </tr>
             </thead>
             <tbody>
+            @isset($praticiens) <!-- Vérifiez si la variable $praticiens est définie -->
             @foreach ($praticiens as $praticien)
                 <tr>
                     <td>{{ $praticien->nom_praticien }}</td>
@@ -31,8 +33,8 @@
                     <td>{{ $praticien->lib_specialite }}</td>
                 </tr>
             @endforeach
+            @endisset
             </tbody>
         </table>
     </div>
-
 @endsection

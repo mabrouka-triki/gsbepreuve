@@ -35,7 +35,7 @@ Route::get('/addSpePraticien', [\App\Http\Controllers\PraticienController::class
 Route::post('/ajoutspecialite', [\App\Http\Controllers\PraticienController::class, 'addSpecialite']);
 
 
-Route::get('/rechercherPraticien', [\App\Http\Controllers\PraticienController::class, 'rechercherPraticien']);
+Route::get('/rechercherPraticien', [\App\Http\Controllers\PraticienController::class, 'rechercherPraticien'])->name('rechercherPraticien');
 
 
 

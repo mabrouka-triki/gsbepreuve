@@ -20,24 +20,22 @@ class ServicePraticien
             throw new MonException("Erreur lors de la récupération des praticiens : " . $e->getMessage(), 5);
         }
     }
-    public function recherchePraticienParNom()
+    public function recherchePraticienParNom($nomPraticien)
     {
         try {
             $praticiens = DB::table('praticien')
                 ->join('posseder', 'praticien.id_praticien', '=', 'posseder.id_praticien')
                 ->join('specialite', 'posseder.id_specialite', '=', 'specialite.id_specialite')
-                ->where('praticien.nom_praticien', 'LIKE', "%nom%")
-                ->select('praticien.nom_praticien', 'praticien.prenom_praticien', 'specialite.lib_specialite')
+                ->where('praticien.nom_praticien', 'LIKE', "%$nomPraticien%")
+                ->select('praticien.nom_praticien', DB::raw('MAX(praticien.prenom_praticien) as prenom_praticien'), 'specialite.lib_specialite')
+                ->groupBy('praticien.nom_praticien', 'specialite.lib_specialite') // Inclure specialite.lib_specialite dans GROUP BY
                 ->get();
 
             return $praticiens;
         } catch (QueryException $e) {
-            throw new \Exception("Erreur : " . $e->getMessage(), 5);
+            throw new MonException("Erreur : " . $e->getMessage());
         }
     }
-
-
-
     public function insertSpecialite($specialiteId, $diplome, $coefPrescription)
     {
         try {
