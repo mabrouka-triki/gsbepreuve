@@ -30,9 +30,10 @@ Route::get('/listePraticiens ',[\App\Http\Controllers\PraticienController::class
 
 
 
-Route::get('/addSpePraticien', [\App\Http\Controllers\PraticienController::class, 'addSpecialite']);
 
-Route::post('/ajoutspecialite', [\App\Http\Controllers\PraticienController::class, 'addSpecialite']);
+
+Route::get('/addSpePraticien', [\App\Http\Controllers\PraticienController::class, 'addSpecialite']);
+Route::post('/addSpePraticien', [\App\Http\Controllers\PraticienController::class, 'addSpecialite']);
 
 
 Route::get('/rechercherPraticien', [\App\Http\Controllers\PraticienController::class, 'rechercherPraticien'])->name('rechercherPraticien');
@@ -42,6 +43,5 @@ Route::get('/rechercherPraticien', [\App\Http\Controllers\PraticienController::c
 
 
 
-Route::get('/ModifierSpePraticiens/{id}', [PraticienController::class, 'updateSpecialite']);
-
-Route::post('/postmodifierSpe', [PraticienController::class, 'updateSpecialite'])->name('postmodifierSpe');
+Route::get('/ModififSpePraticien', [\App\Http\Controllers\PraticienController::class, 'updateSpecialite']);
+Route::post('/postmodifierSpe', [\App\Http\Controllers\PraticienController::class, 'updateSpecialite'])->name('postmodifierSpe');
