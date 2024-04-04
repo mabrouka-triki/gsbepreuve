@@ -7,6 +7,8 @@ use App\Exceptions\MonException;
 
 class ServicePraticien
 {
+
+    //Liste
     public function getPraticiens()
     {
         try {
@@ -21,6 +23,8 @@ class ServicePraticien
         }
     }
 
+
+    //Recherche par nom de praticien
     public function recherchePraticienParNom($nomPraticien)
     {
         try {
@@ -38,22 +42,23 @@ class ServicePraticien
         }
     }
 
-    public function insertSpecialite($praticienId, $specialiteId, $diplome, $coefPrescription)
+
+    // Ajoute de specialite
+    public function insertSpecialites($diplome,$coef_prescription, $id_praticien, $id_specialite )
     {
         try {
-            DB::table('posseder')->insert([
-                'id_praticien' => $praticienId,
-                'id_specialite' => $specialiteId,
-                'diplome' => $diplome,
-                'coef_prescription' => $coefPrescription,
-            ]);
-        } catch (\Exception $e) {
-            throw new MonException("Erreur lors de l'insertion de la spécialité : " . $e->getMessage());
+            DB::table('posseder')->insert(
+                ['diplome' => $diplome,
+                    'coef_prescription' => $coef_prescription,
+                    'id_praticien'=> $id_praticien,
+                    'id_specialite'=> $id_specialite,
+                ]
+            );
+        } catch (QueryException $e) {
+            throw new MonException($e->getMessage(), 5);
         }
     }
-    public function updateSpe(){
 
-    }
 
 }
 

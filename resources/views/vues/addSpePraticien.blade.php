@@ -1,41 +1,49 @@
 @extends('layouts/master')
 @section('content')
 
+        {!! Form::open (['url' => 'postSpecialite']) !!}
+        <div class="col-md-12 col-sm-12 well well-md">
+            <center><h1> </h1></center>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-3 control-label">Praticien: </label>
+                    <div class="col-md-6 col-sm-6">
+                        {!! Form::select('id_praticien', $mesSpecialites['praticiens']->pluck('full_name', 'id_praticien'), null, ['class' => 'form-control', 'placeholder' => 'Sélectionnez un praticien', 'required' => 'required']) !!}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-3 control-label">Spécialité : </label>
+                    <div class="col-md-6 col-sm-6">
+                        {!! Form::select('id_specialite', $mesSpecialites['specialites']->pluck('full_name', 'id_specialite'), $uneSpecialite->id_specialite ?? null, ['class' => 'form-control', 'placeholder' => 'Sélectionnez une spécialité', 'required' => 'required']) !!}
+                    </div>
+                </div>
 
-    <div class="col-md-12 col-sm-12 well well-md">
-        <center><h1>Ajouter une spécialité pour un praticien</h1></center>
-        <form class="form-horizontal" method="post" action="/addSpePraticien">
-            @csrf
-            <div class="form-group">
-                <label for="id_praticien">Praticien :</label>
-                <select name="id_praticien" class="form-control" required>
-                    <option value="">Sélectionner un praticien</option>
-                    <!-- Boucle pour afficher les options des praticiens -->
-                    @foreach ($praticiens as $praticien)
-                        <option value="{{ $praticien->id }}">{{ $praticien->nom }}</option>
-                    @endforeach
-                </select>
-            </div>
 
-
-            <div class="form-group">
-                <label for="id_specialite">Spécialité :</label>
-                <select name="id_specialite" class="form-control" required>
-                    <option value="">Sélectionner une spécialité</option>
-                    @foreach($specialites as $specialite)
-                        <option value="{{ $specialite->id_specialite }}">{{ $specialite->lib_specialite }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="diplome">Diplôme :</label>
-                <input type="text" name="diplome" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="coef_prescription">Coefficient de prescription :</label>
-                <input type="text" name="coef_prescription" class="form-control" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Ajouter</button>
-        </form>
+    <div class="form-group">
+        <label class="col-md-3 col-sm-3 control-label">Coef_prescription: </label>
+        <div class="col-md-2 col-sm-2">
+            <input type="text" name="coef_prescription" value="" class="form-control" required>
+        </div>
     </div>
-@endsection
+
+    <div class="form-group">
+        <label class="col-md-3 col-sm-3 control-label">Diplôme : </label>
+        <div class="col-md-2 col-sm-2">
+            <input type="text" name="diplome" value="" class="form-control" required>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3">
+            <button type="submit" class="btn btn-default btn-primary">
+                <span class="glyphicon glyphicon-ok"></span> Valider
+            </button>
+            <button type="button" class="btn btn-default btn-primary " onclick="javascript:if(confirm('vous êtes sur ?')) window.location='{{url('/')}}';">
+                <span class="glyphicon glyphicon-remove"></span> Annuler
+
+            </button>
+        </div>
+    </div>
+    </div>
+    </div>

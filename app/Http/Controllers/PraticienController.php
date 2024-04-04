@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Session;
 use App\Exceptions\MonException;
 class PraticienController
 {
+
+    // pour lister
     public function getPraticien()
     {
         try {
@@ -27,7 +29,7 @@ class PraticienController
         }
     }
 
-
+//Pour ajouter une spécialité
     public function addSpecialite()
     {
         try {
@@ -54,6 +56,8 @@ class PraticienController
 
 
 
+// Pour modifier une specialite on recupere le nom et prenom et il va nous afficher la
+//specialité choisie et on selectionne la spe quand veut modifier
     public function updateSpecialite($id_Praticien)
     {
         try {
@@ -81,6 +85,8 @@ class PraticienController
 
 
 
+// Rechercher par nom de praticien  , qu'il va nous affixher son prenom
+// et specialite
 
     public function rechercherPraticien()
     {

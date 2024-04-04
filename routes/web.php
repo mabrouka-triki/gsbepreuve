@@ -32,8 +32,7 @@ Route::get('/listePraticiens ',[\App\Http\Controllers\PraticienController::class
 
 
 
-Route::get('/addSpePraticien', [\App\Http\Controllers\PraticienController::class, 'addSpecialite']);
-Route::post('/addSpePraticien', [\App\Http\Controllers\PraticienController::class, 'addSpecialite']);
+Route::get('/addSpePraticien', [\App\Http\Controllers\PraticienController::class, 'insertSpecialite']);
 
 
 Route::get('/rechercherPraticien', [\App\Http\Controllers\PraticienController::class, 'rechercherPraticien'])->name('rechercherPraticien');

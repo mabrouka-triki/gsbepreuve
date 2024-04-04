@@ -25,7 +25,7 @@
             </tr>
             </thead>
             <tbody>
-            @isset($praticiens) <!-- Vérifiez si la variable $praticiens est définie -->
+            @isset($praticiens)
             @foreach ($praticiens as $praticien)
                 <tr>
                     <td>{{ $praticien->nom_praticien }}</td>
