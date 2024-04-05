@@ -35,8 +35,11 @@
 
                         <li><a href="{{ url('/rechercherPraticien') }}" data-toggle="collapse" data-target=".navbar-collapse.in">Recherche par nom praticien  </a></li>
 
-                        <li><a href="{{ url('/addSpePraticien') }}" data-toggle="collapse" data-target=".navbar-collapse.in"> Ajout </a></li>
+                        <li><a href="{{ url('/ajouterSpecialite') }}" data-toggle="collapse" data-target=".navbar-collapse.in"> Ajout </a></li>
+
                         <li><a href="{{ url('/ModifSpePraticien') }}" data-toggle="collapse" data-target=".navbar-collapse.in"> Modifier  </a></li>
+
+
 
                     </ul>
 

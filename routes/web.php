@@ -27,20 +27,22 @@ Route::get('/getLogout ',[\App\Http\Controllers\VisiteurController::class,'singO
 Route::get('/listePraticiens ',[\App\Http\Controllers\PraticienController::class,'getPraticien']);
 
 
-
-
-
-
-
-Route::get('/addSpePraticien', [\App\Http\Controllers\PraticienController::class, 'insertSpecialite']);
-
-
+//recherche par nom praticien
 Route::get('/rechercherPraticien', [\App\Http\Controllers\PraticienController::class, 'rechercherPraticien'])->name('rechercherPraticien');
 
 
 
 
+//Ajout une specialité liste deroulante de praticien et specialité
+Route::post('/postSpecialite', [\App\Http\Controllers\PraticienController::class, 'insertSpecialite']);
+
+Route::get ('/addSpePraticien', [\App\Http\Controllers\PraticienController::class, 'insertSpecialite']);
+Route::get ('/ajouterSpecialite', [\App\Http\Controllers\PraticienController::class, 'deroulantinsertSpecialite']);
 
 
-Route::get('/ModififSpePraticien', [\App\Http\Controllers\PraticienController::class, 'updateSpecialite']);
-Route::post('/postmodifierSpe', [\App\Http\Controllers\PraticienController::class, 'updateSpecialite'])->name('postmodifierSpe');
+
+//modifier
+Route::get('/ModifSpePraticien', [\App\Http\Controllers\PraticienController::class, 'updateSpecialite']);
+Route::post('/updateSpecialite', [\App\Http\Controllers\PraticienController::class, 'updateSpecialite'])->name('postmodifierSpe');
+
+

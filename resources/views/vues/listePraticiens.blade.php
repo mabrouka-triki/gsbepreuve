@@ -21,25 +21,18 @@
 
             </tr>
             </thead>
-            @foreach ($mesPraticiens as $unPraticiens)
+            @foreach($mesPraticiens as $unePraticien)
                 <tr>
-                    <td>{{$unPraticiens->id_praticien}}</td>
-                    <td>{{$unPraticiens->nom_praticien}}</td>
-                    <td>{{$unPraticiens->prenom_praticien}}</td>
-                    <td>{{$unPraticiens->cp_praticien}}</td>
-                    <td>{{$unPraticiens->lib_specialite}}</td>
-
-                <td style="text-align: center">
-                    <a href="{{ url('/ModifSpePraticien') }}/{{ $unPraticiens->id_praticien }}">
-                        <span class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="top" title="modifier"></span>
-
-                <td style="text-align: center">
-                    <a class="glyphicon glyphicon-remove" data-toggle="tooltip" data-placement="top" title="supprimer"
-                       onclick="if (confirm('Suppression confirmée ?')) {
-                window.location='{{ url('/supprimerSpePraticien') }}/{{ $unPraticiens->id_praticien }}';}">
-                    </a>
-                </td>
-
+                    <td>{{$unePraticien->id_praticien}}</td>
+                    <td>{{$unePraticien->nom_praticien}}</td>
+                    <td>{{$unePraticien->prenom_praticien}}</td>
+                    <td>{{$unePraticien->specialites}}</td>
+                    <td style="text-align: center;">
+                        <a href="{{ url('/modifierSpecialite') }}/{{$unePraticien->id_praticien}}">
+                            <span class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="top" title="Modifier">{{$unePraticien->id_praticien}}</span>
+                        </a>
+                    </td>
+                </tr>
             @endforeach
         </table>
         <div class="col-md-6 col-md-offset-3">

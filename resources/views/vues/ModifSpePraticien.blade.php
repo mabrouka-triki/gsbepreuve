@@ -1,37 +1,33 @@
 @extends('layouts.master')
 
 @section('content')
-    <div class="col-md-12 col-sm-12 well well-md">
-        <center><h1>Modification de la spécialité d'un praticien</h1></center>
-        <form class="form-horizontal" method="post" action="{{ route('postmodifierSpe') }}">
-            @csrf
+    <form action="{{ url('updateSpecialite') }}" method="POST">
+        @csrf
+        <div class="col-md-12 col-sm-12 well well-md">
+            <center><h1>Modifier Spécialité</h1></center>
             <div class="form-group">
-                <label class="col-md-3 col-sm-3 control-label">Praticien :</label>
-                <div class="col-md-6 col-sm-6">
-                    <p>{{ $praticien->nom }} {{ $praticien->prenom }}</p>
-                </div>
+                <label>Sélectionnez un praticien:</label>
+                <select name="id_praticien" class="form-control" required>
+                    <option value="" selected disabled>Sélectionnez un praticien</option>
+                    @foreach($praticiens as $praticien)
+                        <option value="{{ $praticien->id_praticien }}">{{ $praticien->full_name }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group">
-                <label class="col-md-3 col-sm-3 control-label">Spécialité :</label>
-                <div class="col-md-6 col-sm-6">
-                    <select name="id_specialite" class="form-control" required>
-                        <option value="">Sélectionner une spécialité</option>
-                        @foreach($specialites as $specialite)
-                            <option value="{{ $specialite->id }}">{{ $specialite->lib_specialite }}</option>
-                        @endforeach
-                    </select>
-                </div>
+                <label>Sélectionnez une spécialité:</label>
+                <select name="id_specialite" class="form-control" required>
+                    <option value="" selected disabled>Sélectionnez une spécialité</option>
+                    @foreach($specialites as $specialite)
+                        <option value="{{ $specialite->id_specialite }}">{{ $specialite->full_name }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group">
-                <div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3">
-                    <button type="submit" class="btn btn-default btn-primary">
-                        <span class="glyphicon glyphicon-ok"></span> Valider </button>
-                    &nbsp;
-                    <a href="{{ route('annulerAction') }}" class="btn btn-default btn-primary">
-                        <span class="glyphicon glyphicon-remove"></span> Annuler</a>
-                </div>
+                <button type="submit" class="btn btn-primary">Valider</button>
+                <button type="button" class="btn btn-primary" onclick="if(confirm('Êtes-vous sûr ?')) window.location='{{ url('/') }}';">Annuler</button>
             </div>
-        </form>
-    </div>
-
+        </div>
+    </form>
+@endsection
 @endsection

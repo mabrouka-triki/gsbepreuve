@@ -29,59 +29,6 @@ class PraticienController
         }
     }
 
-//Pour ajouter une spécialité
-    public function addSpecialite()
-    {
-        try {
-
-            $praticienId = request::input('id_praticien');
-            $specialiteId = request::input('id_specialite');
-            $diplome = request::input('diplome');
-            $coefPrescription = request::input('coef_prescription');
-
-            if ($praticienId === null) {
-                throw new \Exception("Veuillez sélectionner un praticien.");
-            }
-
-            $unServicePraticien = new ServicePraticien();
-            $unServicePraticien->insertSpecialite($praticienId, $specialiteId, $diplome, $coefPrescription);
-
-
-            return view('Vues/addSpePraticien')->with('success', 'Spécialité ajoutée avec succès.');
-        } catch (\Exception $e) {
-            // En cas d'erreur, retourner à la vue avec un message d'erreur
-            return view('Vues/error')->with('error', $e->getMessage());
-        }
-    }
-
-
-
-// Pour modifier une specialite on recupere le nom et prenom et il va nous afficher la
-//specialité choisie et on selectionne la spe quand veut modifier
-    public function updateSpecialite($id_Praticien)
-    {
-        try {
-            // Instancier le service Praticien
-            $servicePraticien = new ServicePraticien();
-
-            // Obtenir les détails du praticien par son ID
-            $praticien = $servicePraticien->getById($id_Praticien);
-
-            // Obtenir toutes les spécialités pour afficher dans la liste déroulante
-            $specialites = $servicePraticien->getAllSpecialite();
-
-            // Passer les données récupérées à la vue du formulaire de modification
-            return view('Vues/modifierSpePraticien', compact('praticien', 'specialites'));
-
-        } catch (MonException $e) {
-            $erreur = $e->getMessage();
-            return view('vues/error', compact('erreur'));
-        } catch (Exception $e) {
-            $erreur = $e->getMessage();
-            return view('vues/error', compact('erreur'));
-        }
-    }
-
 
 
 
@@ -97,6 +44,75 @@ class PraticienController
 
         return view('vues/rechercherPraticien', compact('praticiens'));
     }
+
+
+    //ajout
+    public function insertSpecialite()
+    {
+
+        try {
+            $diplome = Request::input("diplome");
+            $id_specialite = Request::input("id_specialite");
+            $id_praticien = Request::input("id_praticien");
+            $coef_prescription = Request::input("coef_prescription");
+
+            // pour  Vérifier si le praticien a déjà cette spécialité
+            $servicePraticien = new ServicePraticien();
+            $specialiteExistante = $servicePraticien->verifierSpecialitePraticien($id_praticien, $id_specialite);
+            if ($specialiteExistante) {
+                return redirect()->back()->with('error', 'Le praticien a déjà cette spécialité.');
+            }
+
+            // Insérer la spécialité si le praticien n'a pas déjà cette spécialité
+            $servicePraticien->insertSpecialite($diplome, $coef_prescription, $id_praticien, $id_specialite);
+
+            // Retourner une réponse de réussite ou rediriger vers une autre page si nécessaire
+            return redirect()->route('home')->with('success', 'Spécialité ajoutée avec succès.');
+
+        } catch (MonException $e) {
+            return view('vues/error', ['monErreur' => $e->getMessage()]);
+        } catch (Exception $e) {
+            return view('vues/error', ['monErreur' => $e->getMessage()]);
+        }
+    }
+
+
+    public function deroulantinsertSpecialite()
+    {
+        try {
+            $monErreur = Session::get('monErreur');
+            Session::forget('monErreur');
+            $uneSpecialite = new ServicePraticien();
+            $mesSpecialites = $uneSpecialite->deroulantinsertSpecialites();
+            return view('vues/addSpePraticien', compact('mesSpecialites', 'monErreur'));
+        } catch (MonException $e) {
+            $monErreur = $e->getMessage();
+            return view('vues/error', compact('monErreur'));
+        } catch (Exception $e) {
+            $monErreur = $e->getMessage();
+            return view('vues/error', compact('monErreur'));
+        }
+    }
+
+
+// Pour modifier une specialite on recupere le nom et prenom et il va nous afficher la
+//specialité choisie et on selectionne la spe qu'on souhaite modifier
+    public function updateSpecialite()
+    {
+        try {
+
+            $servicePraticien = new ServicePraticien();
+            return view('Vues/modifierSpePraticien', compact('', ''));
+
+        } catch (MonException $e) {
+            $erreur = $e->getMessage();
+            return view('vues/error', compact('erreur'));
+        } catch (Exception $e) {
+            $erreur = $e->getMessage();
+            return view('vues/error', compact('erreur'));
+        }
+    }
 }
+
 
 
