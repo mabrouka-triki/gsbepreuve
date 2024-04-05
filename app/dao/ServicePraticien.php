@@ -65,7 +65,7 @@ class ServicePraticien
         }
     }
 
-
+// pour lister tt specialité
     public function deroulantinsertSpecialites()
     {
         try {
@@ -85,7 +85,7 @@ class ServicePraticien
             throw new MonException($e->getMessage(), 5);
         }
     }
-
+    //verifier si ila deja cette specialité
     public function verifierSpecialitePraticien($id_praticien, $id_specialite)
     {
         // pour  Vérifier  si le praticien a déjà cette spécialité
@@ -95,6 +95,15 @@ class ServicePraticien
             ->exists();
 
         return $specialiteExistante;
+    }
+
+    //modif
+
+    public function updateSpecialite($id_praticien, $nouvellesSpecialites)
+    {
+        $praticien = Praticien::findOrFail($id_praticien);
+        $praticien->specialites = $nouvellesSpecialites;
+        $praticien->save();
     }
 
 

@@ -97,13 +97,20 @@ class PraticienController
 
 // Pour modifier une specialite on recupere le nom et prenom et il va nous afficher la
 //specialité choisie et on selectionne la spe qu'on souhaite modifier
-    public function updateSpecialite()
+
+
+    public function updateSpecialite($id_praticien)
     {
         try {
+            $servicePraticien = new ServicePraticien(); // Instanciation du service pour manipuler les praticiens
+            $praticien = $servicePraticien->getById($id_praticien); // Récupération du praticien par son ID
 
-            $servicePraticien = new ServicePraticien();
-            return view('Vues/modifierSpePraticien', compact('', ''));
+            $specialitesDisponibles = ["Spécialité 1", "Spécialité 2", "Spécialité 3"]; // Liste des spécialités disponibles
 
+            // Vous pouvez également récupérer les spécialités disponibles depuis la base de données ou toute autre source
+
+            $titreVue = "Modification de la spécialité d'un praticien";
+            return view('vues/ModifSpePraticien', compact('praticien', 'titreVue', 'specialitesDisponibles'));
         } catch (MonException $e) {
             $erreur = $e->getMessage();
             return view('vues/error', compact('erreur'));

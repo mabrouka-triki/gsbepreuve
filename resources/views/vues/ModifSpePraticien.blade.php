@@ -1,33 +1,24 @@
-@extends('layouts.master')
+@extends('layouts/master')
 
 @section('content')
-    <form action="{{ url('updateSpecialite') }}" method="POST">
-        @csrf
-        <div class="col-md-12 col-sm-12 well well-md">
-            <center><h1>Modifier Spécialité</h1></center>
-            <div class="form-group">
-                <label>Sélectionnez un praticien:</label>
-                <select name="id_praticien" class="form-control" required>
-                    <option value="" selected disabled>Sélectionnez un praticien</option>
-                    @foreach($praticiens as $praticien)
-                        <option value="{{ $praticien->id_praticien }}">{{ $praticien->full_name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Sélectionnez une spécialité:</label>
-                <select name="id_specialite" class="form-control" required>
-                    <option value="" selected disabled>Sélectionnez une spécialité</option>
-                    @foreach($specialites as $specialite)
-                        <option value="{{ $specialite->id_specialite }}">{{ $specialite->full_name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Valider</button>
-                <button type="button" class="btn btn-primary" onclick="if(confirm('Êtes-vous sûr ?')) window.location='{{ url('/') }}';">Annuler</button>
-            </div>
+    @extends('layouts.master')
+    @section('content')
+        <div class="container">
+            <h1>Modifier la spécialité du praticien {{$praticien->nom_praticien}} {{$praticien->prenom_praticien}}</h1>
+            <form method="POST" action="{{ route('postmodifierSpe', $praticien->id_praticien) }}">                @csrf
+                @method('POST')
+                <div class="form-group">
+                    <label for="specialite">Spécialité :</label>
+                    <select name="specialite" class="form-control">
+                        @foreach($specialitesDisponibles as $specialite)
+                            <option value="{{ $specialite }}" {{ $praticien->specialite === $specialite ? 'selected' : '' }}>{{ $specialite }}</option>
+                        @endforeach
+                    </select>
+                    @error('specialite')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <button type="submit" class="btn btn-primary">Modifier</button>
+            </form>
         </div>
-    </form>
-@endsection
-@endsection
+    @endsection
