@@ -42,7 +42,7 @@ Route::get ('/ajouterSpecialite', [\App\Http\Controllers\PraticienController::cl
 
 
 //modifier
-Route::get('/ModifSpePraticien', [\App\Http\Controllers\PraticienController::class, 'updateSpecialite']);
-Route::post('/updateSpecialite', [\App\Http\Controllers\PraticienController::class, 'updateSpecialite'])->name('postmodifierSpe');
+Route::get('/ModifSpePraticien/{id_praticien}', [\App\Http\Controllers\PraticienController::class, 'updateSpecialite']);
+Route::post('/update-specialite/{id_praticien}/{id_specialite}', 'PraticienController@updateSpecialite');
 
 

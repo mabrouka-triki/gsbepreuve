@@ -9,6 +9,7 @@ class ServicePraticien
 {
 
     //Liste
+
     public function getPraticiens()
     {
         try {
@@ -45,15 +46,15 @@ class ServicePraticien
 
 
     // Ajoute de specialite
-    public function insertSpecialite($diplome,$coef_prescription, $id_praticien, $id_specialite )
+    public function insertSpecialite($diplome, $coef_prescription, $id_praticien, $id_specialite)
     {
 
         try {
             DB::table('posseder')->insert(
                 ['diplome' => $diplome,
                     'coef_prescription' => $coef_prescription,
-                    'id_praticien'=> $id_praticien,
-                    'id_specialite'=> $id_specialite,
+                    'id_praticien' => $id_praticien,
+                    'id_specialite' => $id_specialite,
                 ]
             );
 
@@ -72,7 +73,6 @@ class ServicePraticien
             $praticiens = DB::table('praticien')
                 ->select('id_praticien', DB::raw("CONCAT(id_praticien, ' - ', nom_praticien, ' ', prenom_praticien) AS full_name"))
                 ->get();
-
             $specialites = DB::table('specialite')
                 ->select('id_specialite', DB::raw("CONCAT(lib_specialite) AS full_name"))
                 ->get();
@@ -97,6 +97,32 @@ class ServicePraticien
         return $specialiteExistante;
     }
 
+    public function updateSpecialite($id_specialite, $nouveau_libelle)
+    {
+        try {
+            DB::table('specialite')
+                ->where('id_specialite', $id_specialite)
+                ->update(['lib_specialite' => $nouveau_libelle]);
+        } catch (QueryException $e) {
+            throw new MonException($e->getMessage(), 5);
+        }
+    }
 
+
+    public function getById($id_praticien)
+    {
+        $praticien = DB::table('praticien')
+            ->join('posseder', 'praticien.id_praticien', '=', 'posseder.id_praticien')
+            ->join('specialite', 'posseder.id_specialite', '=', 'specialite.id_specialite')
+            ->where('praticien.id_praticien', $id_praticien)
+            ->select('praticien.nom_praticien', 'praticien.prenom_praticien', DB::raw("GROUP_CONCAT(specialite.lib_specialite SEPARATOR ', ') AS specialites"))
+            ->groupBy('praticien.nom_praticien', 'praticien.prenom_praticien')
+            ->first();
+        $specialites = DB::table('specialite')
+            ->select('id_specialite', DB::raw("CONCAT(lib_specialite) AS full_name"))
+            ->get();
+        return $praticien;
+        return $specialites ;
+}
 }
 
