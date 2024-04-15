@@ -66,7 +66,6 @@ class ServicePraticien
         }
     }
 
-
     public function deroulantinsertSpecialites()
     {
         try {
@@ -86,6 +85,8 @@ class ServicePraticien
         }
     }
 
+
+
     public function verifierSpecialitePraticien($id_praticien, $id_specialite)
     {
         // pour  Vérifier  si le praticien a déjà cette spécialité
@@ -97,32 +98,68 @@ class ServicePraticien
         return $specialiteExistante;
     }
 
-    public function updateSpecialite($id_specialite, $nouveau_libelle)
-    {
+
+
+    //modifier
+    public function updateSpecialites($id_specialite, $id_praticien, $nouvelspe) {
         try {
-            DB::table('specialite')
+            DB::table('posseder')
                 ->where('id_specialite', $id_specialite)
-                ->update(['lib_specialite' => $nouveau_libelle]);
+                ->where('id_praticien', $id_praticien)
+                ->update(['id_specialite' => $nouvelspe]);
+
+        } catch (\Illuminate\Database\QueryException $e) {
+            throw new MonException($e->getMessage(), 5);
+        }
+    }
+
+
+    public function getSpecialite($id_praticien) {
+        try {
+            $uneSpecialite = DB::table('praticien')
+                ->select()
+                ->where('id_praticien', '=', $id_praticien)
+                ->first();
+            return $uneSpecialite;
+        } catch (\Illuminate\Database\QueryException $e) {
+            throw new MonException($e->getMessage(),5);
+        }
+    }
+
+
+    public function deroulantupdateSpecialites() {
+        try {
+            //  pour Récupérer tous les praticiens leurs noms et prenom
+            $praticiens = DB::table('praticien')
+                ->select('id_praticien', DB::raw("CONCAT(id_praticien, ' - ', nom_praticien, ' ', prenom_praticien) AS full_name"))
+                ->get();
+
+            //  Pour Récupérer les spécialités associées à chaque praticien
+            $specialitesParPraticien = [];
+            foreach ($praticiens as $praticien) {
+                $specialites = DB::table('posseder')
+                    ->join('specialite', 'posseder.id_specialite', '=', 'specialite.id_specialite')
+                    ->where('posseder.id_praticien', $praticien->id_praticien)
+                    ->select('specialite.id_specialite', DB::raw("CONCAT(lib_specialite) AS full_name"))
+                    ->get();
+                $specialitesParPraticien[$praticien->id_praticien] = $specialites;
+            }
+
+            // Récupérer toutes les spécialités disponibles
+            $toutesSpecialites = DB::table('specialite')
+                ->select('id_specialite', DB::raw("CONCAT(lib_specialite) AS full_name"))
+                ->get();
+
+            return [
+                'praticiens' => $praticiens,
+                'specialitesParPraticien' => $specialitesParPraticien,
+                'toutesSpecialites' => $toutesSpecialites,
+            ];
         } catch (QueryException $e) {
             throw new MonException($e->getMessage(), 5);
         }
     }
 
 
-    public function getById($id_praticien)
-    {
-        $praticien = DB::table('praticien')
-            ->join('posseder', 'praticien.id_praticien', '=', 'posseder.id_praticien')
-            ->join('specialite', 'posseder.id_specialite', '=', 'specialite.id_specialite')
-            ->where('praticien.id_praticien', $id_praticien)
-            ->select('praticien.nom_praticien', 'praticien.prenom_praticien', DB::raw("GROUP_CONCAT(specialite.lib_specialite SEPARATOR ', ') AS specialites"))
-            ->groupBy('praticien.nom_praticien', 'praticien.prenom_praticien')
-            ->first();
-        $specialites = DB::table('specialite')
-            ->select('id_specialite', DB::raw("CONCAT(lib_specialite) AS full_name"))
-            ->get();
-        return $praticien;
-        return $specialites ;
-}
 }
 

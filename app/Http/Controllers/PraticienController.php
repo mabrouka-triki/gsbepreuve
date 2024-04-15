@@ -67,7 +67,7 @@ class PraticienController
             $servicePraticien->insertSpecialite($diplome, $coef_prescription, $id_praticien, $id_specialite);
 
             // Retourner une réponse de réussite ou rediriger vers une autre page si nécessaire
-            return redirect()->route('home')->with('success', 'Spécialité ajoutée avec succès.');
+            return redirect()->route('listePraticiens')->with('success', 'Spécialité ajoutée avec succès.');
 
         } catch (MonException $e) {
             return view('vues/error', ['monErreur' => $e->getMessage()]);
@@ -95,28 +95,66 @@ class PraticienController
     }
 
 
+
     // Pour modifier une specialite on recupere le nom et prenom et il va nous afficher la
+
     //specialité choisie et on selectionne la spe qu'on souhaite modifier
+
+    // ensuite on va selectionner une nouvelle specialite
+
     public function updateSpecialite($id_praticien)
     {
         try {
-            $unServicePraticien = new ServicePraticien();
-            $unPraticien = $unServicePraticien->getById($id_praticien);
+            $servicePraticien = new ServicePraticien();
 
+            $mesSpecialites = $servicePraticien->deroulantupdateSpecialites();
+            $uneSpecialite = $servicePraticien->getSpecialite($id_praticien);
 
-            if (!$unPraticien) {
-                $erreur = "Praticien introuvable.";
-                return view('vues/error', compact('erreur'));
-            }
-            $titreVue = "Modification de la spécialité d'un praticien";
-
-            return view('Vues/ModifSpePraticien', compact('unPraticien', 'titreVue'));
+            return view('vues/ModifSpePraticien', compact('uneSpecialite', 'mesSpecialites'));
         } catch (MonException $e) {
-            $erreur = $e->getMessage();
-            return view('vues/error', compact('erreur'));
+            $monErreur = $e->getMessage();
+            return view('vues/error', compact('monErreur'));
         } catch (Exception $e) {
-            $erreur = $e->getMessage();
-            return view('vues/error', compact('erreur'));
+            $monErreur = $e->getMessage();
+            return view('vues/error', compact('monErreur'));
+        }
+    }
+
+    public function postmodificationSpecialite()
+    {
+        $id_specialite = Request::input("id_specialite");
+        $nouvelspe = Request::input("nouvelspe");
+        $id_praticien = Request::input("id_praticien");
+
+        try {
+            $servicePraticien = new ServicePraticien();
+            $servicePraticien ->updateSpecialites($id_specialite, $id_praticien,  $nouvelspe );
+            return view('home');
+        } catch (MonException $e) {
+            $monErreur = $e->getMessage();
+            return view('vues/error', compact('monErreur'));
+        } catch (Exception $e) {
+            $monErreur = $e->getMessage();
+            return view('vues/error', compact('monErreur'));
+        }
+    }
+
+
+
+    public function deroulantupdateSpecialite()
+    {
+        try {
+            $monErreur = Session::get('monErreur');
+            Session::forget('monErreur');
+            $servicePraticien = new ServicePraticien();
+            $mesSpecialites = $servicePraticien->deroulantupdateSpecialites();
+            return view('vues/addSpePraticien', compact('mesSpecialites', 'monErreur'));
+        } catch (MonException $e) {
+            $monErreur = $e->getMessage();
+            return view('vues/error', compact('monErreur'));
+        } catch (Exception $e) {
+            $monErreur = $e->getMessage();
+            return view('vues/error', compact('monErreur'));
         }
     }
 }

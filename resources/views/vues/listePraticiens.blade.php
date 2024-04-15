@@ -15,7 +15,7 @@
                 <th style="width: 25%; text-align:center">Nom praticien </th>
                 <th style="width: 25%; text-align:center">Prénom de praticien </th>
                 <th style="width: 25%; text-align:center">Specialite</th>
-                <th style="width: 25%; text-align:center">Action </th>
+                <th style="width: 25%; text-align:center"> Action </th>
 
 
             </tr>
@@ -29,6 +29,12 @@
                     <td style="text-align: center;">
                         <a href="{{ url('/ModifSpePraticien') }}/{{$unePraticien->id_praticien}}">
                             <span class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="top" title="Modifier">{{$unePraticien->id_praticien}}</span>
+                        </a>
+                    </td>
+
+                    <td style="text-align: center;">
+                        <a href="{{ url('/') }}/supprimer/{{ $unePraticien->id_praticien }}">
+                            <span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="top" title="Supprimer"></span>
                         </a>
                     </td>
                 </tr>
