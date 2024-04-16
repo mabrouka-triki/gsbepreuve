@@ -55,4 +55,6 @@ Route::get('/ModifSpePraticien', 'App\Http\Controllers\PraticienController@derou
 
 // supprimer
 
-Route::get('/SupprimerSpePraticien/{id_praticien}', [\App\Http\Controllers\PraticienController::class, 'supprimerSpecialitePraticien'])->name('supprimerSpecialitePraticien');
+
+Route::delete('/supprimer-specialite-praticien/{id_praticien}', [PraticienController::class, 'supprimerSpecialitePraticien'])
+    ->name('supprimerSpecialitePraticien');

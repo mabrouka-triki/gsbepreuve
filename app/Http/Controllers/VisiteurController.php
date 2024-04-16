@@ -1,11 +1,11 @@
 <?php
+
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Request;
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\dao\ServiceVisiteur;
 use App\Exceptions\MonException;
-use Exception;
-
 
 class VisiteurController extends Controller
 {
@@ -26,37 +26,29 @@ class VisiteurController extends Controller
                 }
             } else {
                 $erreur = "Login ou mot de passe inconnu !!";
-                return view('Vues/formLogin', compact('erreur'));
+                return view('vues.formLogin', compact('erreur'));
             }
         } catch (MonException $e) {
-            // Traitez l'exception ici
             $erreur = $e->getMessage();
-            return view('Vues/formLogin', compact('erreur'));
+            return view('vues.formLogin', compact('erreur'));
         }
     }
-
 
     public function getLogin()
     {
         try {
             $erreur = "";
-            return view('Vues/formLogin', compact('erreur'));
+            return view('vues.formLogin', compact('erreur'));
         } catch (MonException $e) {
-            $monErreur = $e->getMessage();
-            return view('Vues/formLogin', compact('erreur'));
-        } catch (MonException $e) {
-            $monErreur = $e->getMessage();
-            return view('Vues/formLogin', compact('erreur'));
+            $erreur = $e->getMessage();
+            return view('vues.formLogin', compact('erreur'));
         }
     }
 
-    public function singOut()
+    public function signOut()
     {
         $unVisiteur = new ServiceVisiteur();
         $unVisiteur->logout();
         return view('home');
     }
-
-
-
 }

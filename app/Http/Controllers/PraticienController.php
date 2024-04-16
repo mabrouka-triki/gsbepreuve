@@ -154,14 +154,14 @@ class PraticienController
 
     // supprimer
 
-    public function supprimerSpecialitePraticien( $id_praticien)
+    public function supprimerSpecialitePraticien(Request $request, $id_praticien)
     {
         $id_specialite = request::input("id_specialite_a_supprimer");
 
         try {
             $servicePraticien = new ServicePraticien();
             $servicePraticien->deleteSpecialite($id_specialite);
-            return view('home')->with('success', 'La spécialité a été supprimée avec succès.');
+            return redirect()->route('home')->with('success', 'La spécialité a été supprimée avec succès.');
         } catch (MonException $e) {
             $monErreur = $e->getMessage();
             return view('vues/error', compact('monErreur'));
@@ -170,7 +170,6 @@ class PraticienController
             return view('vues/error', compact('monErreur'));
         }
     }
-
 
 
 

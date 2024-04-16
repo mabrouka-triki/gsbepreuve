@@ -33,7 +33,7 @@
                     </td>
 
                     <td style="text-align: center;">
-                        <a href="{{ url('/SupprimerSpePraticien', ['id_praticien' => $unePraticien->id_praticien]) }}">
+                        <a href="{{ url('/postmodifierSpecialite', ['id_praticien' => $unePraticien->id_praticien]) }}">
                             <span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="top" title="Supprimer"></span>
                         </a>
 
