@@ -1,4 +1,4 @@
-@extends ('layouts.master')
+@extends ('layouts/master')
 @section('content')
 
     <div class="container">
@@ -33,11 +33,10 @@
                     </td>
 
                     <td style="text-align: center;">
-                        <a href="{{ url('/') }}/supprimer/{{ $unePraticien->id_praticien }}">
+                        <a href="{{ url('/SupprimerSpePraticien', ['id_praticien' => $unePraticien->id_praticien]) }}">
                             <span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="top" title="Supprimer"></span>
                         </a>
-                    </td>
-                </tr>
+
             @endforeach
         </table>
         <div class="col-md-6 col-md-offset-3">

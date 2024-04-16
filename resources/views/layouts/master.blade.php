@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {!! Html::style('assets/css/bootstrap.css') !!}
     {!! Html::style('assets/css/monStyle.css') !!}
+
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
 </head>
@@ -30,17 +31,14 @@
             @endif
             @if (Session::get('id') > 0)
                 <div class="collapse navbar-collapse" id="navbar-collapse-target">
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav navbar-center">
                         <li><a href="{{ url('/listePraticiens') }}" data-toggle="collapse" data-target=".navbar-collapse.in">Liste </a></li>
 
                         <li><a href="{{ url('/rechercherPraticien') }}" data-toggle="collapse" data-target=".navbar-collapse.in">Recherche par nom praticien  </a></li>
 
                         <li><a href="{{ url('/ajouterSpecialite') }}" data-toggle="collapse" data-target=".navbar-collapse.in"> Ajout </a></li>
-
-
-
-
                     </ul>
+                </di>
 
 
                     <ul class="nav navbar-nav navbar-right">

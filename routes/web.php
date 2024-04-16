@@ -14,9 +14,12 @@ use App\Http\Controllers\PraticienController;
 |
 */
 
-Route::get('/', function () {
+
+
+Route::get('/home', function () {
     return view('home');
-});
+})->name('home');
+
 Route::get('/formLogin ',[\App\Http\Controllers\VisiteurController::class,'getLogin']);
 Route::post('/login ',[\App\Http\Controllers\VisiteurController::class,'signIn']);
 Route::get('/getLogout ',[\App\Http\Controllers\VisiteurController::class,'singOut']);
@@ -41,15 +44,15 @@ Route::get ('/ajouterSpecialite', [\App\Http\Controllers\PraticienController::cl
 
 
 
+// Route pour afficher le formulaire de modification de spécialité du praticien
+Route::get('/ModifSpePraticien/{id_praticien}', 'App\Http\Controllers\PraticienController@updateSpecialite');
 
-//Modifier le praticien
-//modifier
-Route::get('/ModifSpePraticien/{id_praticien}', [\App\Http\Controllers\PraticienController::class, 'updateSpecialite']);
+// Route pour traiter la soumission du formulaire de modification de spécialité du praticien
+Route::post('/postmodifierSpecialite/{id_praticien}', 'App\Http\Controllers\PraticienController@postmodificationSpecialite')->name('postmodifierSpecialite');
 
-Route::post('/postmodifierSpecialite/{id_praticien}',
-    array(
-        'uses' => 'App\Http\Controllers\PraticienController@updateSpecialite',
-        'as' => 'postmodifierSpecialite'
-    ));
-Route::get('/ModifSpePraticien', [\App\Http\Controllers\PraticienController::class, 'deroulantupdateSpecialite']);
+// Route pour afficher le formulaire de choix de spécialité à modifier
+Route::get('/ModifSpePraticien', 'App\Http\Controllers\PraticienController@deroulantupdateSpecialite');
 
+// supprimer
+
+Route::get('/SupprimerSpePraticien/{id_praticien}', [\App\Http\Controllers\PraticienController::class, 'supprimerSpecialitePraticien'])->name('supprimerSpecialitePraticien');

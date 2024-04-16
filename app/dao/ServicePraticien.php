@@ -86,7 +86,6 @@ class ServicePraticien
     }
 
 
-
     public function verifierSpecialitePraticien($id_praticien, $id_specialite)
     {
         // pour  Vérifier  si le praticien a déjà cette spécialité
@@ -99,22 +98,21 @@ class ServicePraticien
     }
 
 
-
     //modifier
-    public function updateSpecialites($id_specialite, $id_praticien, $nouvelspe) {
+    public function updateSpecialites($id_specialite, $id_praticien, $nouvelspe)
+    {
         try {
             DB::table('posseder')
                 ->where('id_specialite', $id_specialite)
                 ->where('id_praticien', $id_praticien)
                 ->update(['id_specialite' => $nouvelspe]);
-
         } catch (\Illuminate\Database\QueryException $e) {
             throw new MonException($e->getMessage(), 5);
         }
     }
 
-
-    public function getSpecialite($id_praticien) {
+    public function getSpecialite($id_praticien)
+    {
         try {
             $uneSpecialite = DB::table('praticien')
                 ->select()
@@ -122,44 +120,47 @@ class ServicePraticien
                 ->first();
             return $uneSpecialite;
         } catch (\Illuminate\Database\QueryException $e) {
-            throw new MonException($e->getMessage(),5);
-        }
-    }
-
-
-    public function deroulantupdateSpecialites() {
-        try {
-            //  pour Récupérer tous les praticiens leurs noms et prenom
-            $praticiens = DB::table('praticien')
-                ->select('id_praticien', DB::raw("CONCAT(id_praticien, ' - ', nom_praticien, ' ', prenom_praticien) AS full_name"))
-                ->get();
-
-            //  Pour Récupérer les spécialités associées à chaque praticien
-            $specialitesParPraticien = [];
-            foreach ($praticiens as $praticien) {
-                $specialites = DB::table('posseder')
-                    ->join('specialite', 'posseder.id_specialite', '=', 'specialite.id_specialite')
-                    ->where('posseder.id_praticien', $praticien->id_praticien)
-                    ->select('specialite.id_specialite', DB::raw("CONCAT(lib_specialite) AS full_name"))
-                    ->get();
-                $specialitesParPraticien[$praticien->id_praticien] = $specialites;
-            }
-
-            // Récupérer toutes les spécialités disponibles
-            $toutesSpecialites = DB::table('specialite')
-                ->select('id_specialite', DB::raw("CONCAT(lib_specialite) AS full_name"))
-                ->get();
-
-            return [
-                'praticiens' => $praticiens,
-                'specialitesParPraticien' => $specialitesParPraticien,
-                'toutesSpecialites' => $toutesSpecialites,
-            ];
-        } catch (QueryException $e) {
             throw new MonException($e->getMessage(), 5);
         }
     }
 
+    public function deroulantupdateSpecialites()
+    {
+        try {
+            $praticiens = DB::table('praticien')
+                ->select('id_praticien', DB::raw("CONCAT(id_praticien, ' - ', nom_praticien, ' ', prenom_praticien) AS full_name"))
+                ->get();
+
+            $specialites = DB::table('posseder')
+                ->join('specialite', 'posseder.id_specialite', '=', 'specialite.id_specialite')
+                ->select('posseder.id_praticien', 'specialite.id_specialite', DB::raw("CONCAT(lib_specialite) AS full_name"))
+                ->get()
+                ->groupBy('id_praticien');
+
+            $toutesSpecialites = DB::table('specialite')
+                ->select('id_specialite', DB::raw("CONCAT(lib_specialite) AS full_name"))
+                ->get();
+
+            return compact('praticiens', 'specialites', 'toutesSpecialites');
+        } catch (\Illuminate\Database\QueryException $e) {
+            throw new MonException($e->getMessage(), 5);
+        }
+    }
+
+    //supprimer
+
+    public function deleteSpecialite($id_specialite)
+    {
+        try {
+            DB::table('specialite')
+                ->where('id_specialite', $id_specialite)
+                ->delete();
+
+            return redirect()->route('home')->with('success', 'La spécialité a été supprimée avec succès.');
+        } catch (\Illuminate\Database\QueryException $e) {
+            throw new MonException($e->getMessage(), 5);
+        }
+    }
 
 }
 

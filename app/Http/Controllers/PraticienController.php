@@ -120,17 +120,15 @@ class PraticienController
         }
     }
 
-    public function postmodificationSpecialite()
+    public function postmodificationSpecialite(Request $request, $id_praticien)
     {
-        $id_specialite = Request::input("id_specialite");
-        $nouvelspe = Request::input("nouvelspe");
-        $id_praticien = Request::input("id_praticien");
+        $id_specialite = request::input("id_specialite_a_remplacer");
+        $nouvelspe = request::input("nouvelspe");
 
         try {
             $servicePraticien = new ServicePraticien();
-            $servicePraticien ->updateSpecialites($id_specialite, $id_praticien,  $nouvelspe );
-            return view('home');
-        } catch (MonException $e) {
+            $servicePraticien->updateSpecialites($id_specialite, $id_praticien, $nouvelspe);
+            return view('home')->with('success', 'La spécialité a été mise à jour avec succès.');        } catch (MonException $e) {
             $monErreur = $e->getMessage();
             return view('vues/error', compact('monErreur'));
         } catch (Exception $e) {
@@ -138,17 +136,32 @@ class PraticienController
             return view('vues/error', compact('monErreur'));
         }
     }
+
 
 
 
     public function deroulantupdateSpecialite()
     {
         try {
-            $monErreur = Session::get('monErreur');
-            Session::forget('monErreur');
+            $mesSpecialites = (new ServicePraticien())->deroulantupdateSpecialites();
+        } catch (Exception $e) {
+            return view('vues/error', ['monErreur' => $e->getMessage()]);
+        }
+
+        return view('vues/addSpePraticien', ['mesSpecialites' => $mesSpecialites]);
+    }
+
+
+    // supprimer
+
+    public function supprimerSpecialitePraticien( $id_praticien)
+    {
+        $id_specialite = request::input("id_specialite_a_supprimer");
+
+        try {
             $servicePraticien = new ServicePraticien();
-            $mesSpecialites = $servicePraticien->deroulantupdateSpecialites();
-            return view('vues/addSpePraticien', compact('mesSpecialites', 'monErreur'));
+            $servicePraticien->deleteSpecialite($id_specialite);
+            return view('home')->with('success', 'La spécialité a été supprimée avec succès.');
         } catch (MonException $e) {
             $monErreur = $e->getMessage();
             return view('vues/error', compact('monErreur'));
@@ -157,6 +170,10 @@ class PraticienController
             return view('vues/error', compact('monErreur'));
         }
     }
+
+
+
+
 }
 
 
