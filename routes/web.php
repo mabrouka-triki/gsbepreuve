@@ -16,9 +16,10 @@ use App\Http\Controllers\PraticienController;
 
 
 
-Route::get('/home', function () {
+Route::get('/', function () {
     return view('home');
-})->name('home');
+});
+
 
 Route::get('/formLogin ',[\App\Http\Controllers\VisiteurController::class,'getLogin']);
 Route::post('/login ',[\App\Http\Controllers\VisiteurController::class,'signIn']);
@@ -55,6 +56,8 @@ Route::get('/ModifSpePraticien', 'App\Http\Controllers\PraticienController@derou
 
 // supprimer
 
+// Route pour afficher le formulaire de suppression de spécialité du praticien
+Route::get('/supprimerSpecialite/{id_praticien}', 'App\Http\Controllers\PraticienController@formulaireSuppressionSpecialite');
 
-Route::delete('/supprimer-specialite-praticien/{id_praticien}', [PraticienController::class, 'supprimerSpecialitePraticien'])
-    ->name('supprimerSpecialitePraticien');
+// Route pour traiter la soumission du formulaire de suppression de spécialité du praticien
+Route::post('/postSuppressionSpecialite/{id_praticien}', 'App\Http\Controllers\PraticienController@postSuppressionSpecialite')->name('postSuppressionSpecialite');

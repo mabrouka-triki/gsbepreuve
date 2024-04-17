@@ -148,19 +148,18 @@ class ServicePraticien
     }
 
     //supprimer
-
-    public function deleteSpecialite($id_specialite)
+    public function supprimerSpecialite($id_praticien, $id_specialite)
     {
         try {
-            DB::table('specialite')
+            DB::table('posseder')
                 ->where('id_specialite', $id_specialite)
+                ->where('id_praticien', $id_praticien)
                 ->delete();
-
-            return redirect()->route('home')->with('success', 'La spécialité a été supprimée avec succès.');
         } catch (\Illuminate\Database\QueryException $e) {
             throw new MonException($e->getMessage(), 5);
         }
     }
+
 
 }
 
