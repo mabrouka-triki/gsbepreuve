@@ -67,8 +67,7 @@ class PraticienController
             $servicePraticien->insertSpecialite($diplome, $coef_prescription, $id_praticien, $id_specialite);
 
             // Retourner une réponse de réussite ou rediriger vers une autre page si nécessaire
-            return redirect()->route('vues/listePraticiens')->with('success', 'Spécialité ajoutée avec succès.');
-
+            return view ("home");
         } catch (MonException $e) {
             return view('vues/error', ['monErreur' => $e->getMessage()]);
         } catch (Exception $e) {
