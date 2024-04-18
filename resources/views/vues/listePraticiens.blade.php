@@ -33,9 +33,14 @@
                     </td>
 
                     <td style="text-align: center;">
-                        <a href="{{ url('/postmodifierSpecialite', ['id_praticien' => $unePraticien->id_praticien]) }}">
-                            <span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="top" title="Supprimer"></span>
-                        </a>
+                        <form action="{{ route('postSuppressionSpecialite', ['id_praticien' => $unePraticien->id_praticien]) }}" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-danger">
+                                <span class="glyphicon glyphicon-trash"></span> Supprimer
+                            </button>
+                        </form>
+                    </td>
+
 
             @endforeach
         </table>

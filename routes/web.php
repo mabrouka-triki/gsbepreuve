@@ -57,7 +57,7 @@ Route::get('/ModifSpePraticien', 'App\Http\Controllers\PraticienController@derou
 // supprimer
 
 // Route pour afficher le formulaire de suppression de spécialité du praticien
-Route::get('/supprimerSpecialite/{id_praticien}', 'App\Http\Controllers\PraticienController@formulaireSuppressionSpecialite');
+Route::get('/supprimerSpePraticien/{id_praticien}', 'App\Http\Controllers\PraticienController@afficherFormulaireSuppression')->name('supprimerSpecialite');
 
 // Route pour traiter la soumission du formulaire de suppression de spécialité du praticien
 Route::post('/postSuppressionSpecialite/{id_praticien}', 'App\Http\Controllers\PraticienController@postSuppressionSpecialite')->name('postSuppressionSpecialite');

@@ -148,6 +148,7 @@ class ServicePraticien
     }
 
     //supprimer
+
     public function supprimerSpecialite($id_praticien, $id_specialite)
     {
         try {
@@ -159,7 +160,5 @@ class ServicePraticien
             throw new MonException($e->getMessage(), 5);
         }
     }
-
-
 }
 
