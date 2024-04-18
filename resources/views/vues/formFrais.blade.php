@@ -1,8 +1,4 @@
 
-
-<br>
-<br>
-<br>
 @extends('layouts/master')
 @section('content')
     {!! Form::open(['url' => 'validateFrais']) !!}

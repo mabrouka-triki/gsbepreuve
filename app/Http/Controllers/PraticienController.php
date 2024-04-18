@@ -75,7 +75,6 @@ class PraticienController
         }
     }
 
-
     public function deroulantinsertSpecialite()
     {
         try {

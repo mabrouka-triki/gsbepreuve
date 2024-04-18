@@ -45,15 +45,11 @@ class VisiteurController extends Controller
             return view('Vues/formLogin', compact('erreur'));
         }
     }
-
     public function singOut()
     {
         $unVisiteur = new ServiceVisiteur();
         $unVisiteur->logout();
-        return view('home');
+        return view('Vues/formLogin');
     }
-
-
-
 
 }

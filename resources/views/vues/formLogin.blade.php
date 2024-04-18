@@ -25,13 +25,11 @@
     </div>
 
     <div class="form-group">
-                <div class="col-md-6 col-md-offset-3">
-                    <button type="submit" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-log-in"></span> Valider</button>
-                </div>
-            </div>
-            <div class="col-md-6 col-md-offset-3">
-                @include('Vues/error')
-            </div>
+        <div class="col-md-6 col-md-offset-3">
+            <button type="submit" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-log-in"></span> Valider</button>
         </div>
+    </div>
+    <div class="col-md-6 col-md-offset-3">
+        @include('Vues/error')
     </div>
 @stop
